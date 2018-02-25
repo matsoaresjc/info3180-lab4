@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block css %}
+
+ <link rel="stylesheet" href="{{ url_for('static', filename='css/files.css') }}">   
+
+{% endblock %}
+
+
+{% block main %}
+<h1 class="page-header">View all Images</h1>
+
+<ul>
+<li class = "grid-container">
+{% for image in images %}
+	{% if image.rsplit('.', 1)[1].lower() == 'jpg' or image.rsplit('.', 1)[1].lower() == 'jpeg' %}
+	<img src={{ url_for('static',filename = "uploads/"+ image) }} class = "grid-item"  height =300 px width = 300 px >
+{% endif %}
+{% endfor %}
+
+</ul>  
+
+{% endblock %}

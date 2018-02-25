@@ -48,6 +48,13 @@ def upload():
 
     return render_template('upload.html',form = img)
 
+@app.route('/files', methods=['POST', 'GET'])
+def files():
+    if not session.get('logged_in'):
+        abort(401)
+
+    return render_template('files.html', images = get_uploaded_images())
+
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -73,6 +80,18 @@ def logout():
 ###
 # The functions below should be applicable to all Flask apps.
 ###
+
+
+def get_uploaded_images():
+
+    rootdir = os.getcwd() 
+    images = []
+
+    for subdir, dirs, files in os.walk(rootdir + '/app/static/uploads'):
+        for file in files:
+            images.append(file)
+    return images        
+
 
 # Flash errors from the form if validation fails
 def flash_errors(form):
